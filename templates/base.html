@@ -1,0 +1,557 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="en" class="dark-mode layout-navbar-fixed layout-menu-fixed " dir="ltr" data-theme="theme-default"
+      data-assets-path="{% static '' %}assets/" data-template="vertical-menu-template-dark">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <title>{% trans "eStat - elektron hisobot topshirish platformasi" %}</title>
+    <meta name="description" content="Start your development with a Dashboard for Bootstrap 5"/>
+    <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static '' %}img/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+
+    <script src="{% url 'javascript-catalog' %}"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap"
+            rel="stylesheet">
+    <link rel="stylesheet" href="{% static '' %}assets/vendor/fonts/fontawesome.css"/>
+    <link rel="stylesheet" href="{% static '' %}assets/vendor/fonts/tabler-icons.css"/>
+    <link rel="stylesheet" href="{% static '' %}assets/vendor/fonts/flag-icons.css"/>
+    <link rel="stylesheet" href="{% static '' %}assets/vendor/css/rtl/core.css" class="template-customizer-core-css"/>
+    <link rel="stylesheet" href="{% static '' %}assets/vendor/css/rtl/core-dark.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{% static '' %}assets/vendor/css/rtl/theme-default-dark.css"
+          class="template-customizer-theme-css"/>
+    <link rel="stylesheet" href="{% static '' %}assets/css/demo.css"/>
+    <link rel="stylesheet" href="{% static '' %}assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css"/>
+    <link rel="stylesheet" href="{% static '' %}assets/vendor/libs/node-waves/node-waves.css"/>
+    <link rel="stylesheet" href="{% static '' %}assets/vendor/libs/typeahead-js/typeahead.css"/>
+    <link rel="stylesheet" href="{% static '' %}assets/vendor/libs/apex-charts/apex-charts.css"/>
+    <link rel="stylesheet" href="{% static '' %}assets/vendor/libs/swiper/swiper.css"/>
+    <link rel="stylesheet" href="{% static '' %}assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+{#    <link rel="stylesheet" href="{% static '' %}assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">#}
+    <link rel="stylesheet" href="{% static '' %}assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.css"/>
+    <link rel="stylesheet"
+          href="{% static '' %}assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css">
+    <link rel="stylesheet" href="{% static '' %}assets/vendor/css/pages/cards-advance.css"/>
+
+    {% block style %}{% endblock %}
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <script src="{% static '' %}assets/vendor/js/helpers.js"></script>
+    <script src="{% static '' %}assets/vendor/js/template-customizer.js"></script>
+    <script src="{% static '' %}assets/js/config.js"></script>
+
+
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}?v={{ version }}">
+    <link rel="stylesheet" href="{% static 'css/new_custom.css' %}?v={{ version }}">
+{#    <link rel="stylesheet" href="{% static 'css/new-main.css' %}?v={{ version }}">#}
+    <link rel="stylesheet" href="{% static 'css/select2.min.css' %}?v={{ version }}">
+    <link rel="stylesheet" href="{% static 'css/app_custom.css' %}?v={{ version }}">
+    <script src="{% static 'js/popper.js' %}?v={{ version }}"></script>
+    <script src="{% static 'js/jquery.min.js' %}?v={{ version }}"></script>
+    <script src="{% static 'js/select2.min.js' %}?v={{ version }}"></script>
+    <script src="{% static 'js/jquery-ui.js' %}?v={{ version }}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}?v={{ version }}"></script>
+    <script src="{% static 'js/globals.js' %}?v={{ version }}"></script>
+    <script src="{% static 'js/tel_numbers.js' %}?v={{ version }}"></script>
+    <script src="{% static 'js/FileSaver.min.js' %}?v={{ version }}"></script>
+    <script src="{% static 'js/new-main.js' %}?v={{ version }}"></script>
+    <script src="{% static 'js/assistant.js' %}?v={{ version }}"></script>
+    <script src="{% static 'js/jszip.js' %}?v={{ version }}"></script>
+    <script src="{% static 'js/newXlsZip.js' %}?v={{ version }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(() => {
+            localStorage.setItem('lang', '{{ LANGUAGE_CODE }}')
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    let cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        let cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            window.getCookie = getCookie;
+            let csrfToken = window.getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrfToken);
+                    }
+                },
+                headers: { 'Accept-Language': '{{ LANGUAGE_CODE }}',
+                    'Cache-Control': 'no-cache, max-age=0',
+                    'Pragma': 'no-cache',
+                }
+            });
+
+            $.getJSON('/v1/reports/', {
+                form_json_id: $('#form_json_id').val(),
+                year: $('#year').val(),
+                period: $('#period_id').val(),
+                inn: $('#inn').val(),
+            }, (reports) => {
+                if (reports.length) {
+                        console.log($('#period_id').val())
+                    if (window.reportFetched) {
+                        window.reportFetched(reports, $('#form_json_id').val())
+                    }
+                }
+            });
+
+            window.get_codes = function(code_type){
+                return new Promise((resolve, reject) => {
+                    $.getJSON('/v1/codes/', {
+                        'group': code_type,
+                        'limit': 100000,
+                        'form_id': 515
+                    }).then(response => {
+                        resolve(response)
+                    }).catch(response => {
+                        reject(response)
+                    })
+                })
+            }
+
+            window.init_select2 = function ($target = $('.autocomplete')) {
+                $target.select2({
+                    closeOnSelect: true,
+                    placeholder: "🔍 Qidirish",
+                    ajax: {
+                        url: "/v1/codes/",
+                        dataType: 'json',
+                        data: function (params) {
+                            let group = $(this).data('group');
+                            let relation = $(this).data('relation') || null;
+                            let related_data = "";
+                            if (relation) {
+                                related_data = $(this).parent().parent().find(`[data-column_id="${relation}"]`).val()
+                            }
+                            return {
+                                code: params.term,
+                                group: group,
+                                related_data: related_data,
+                                page: params.page || 1,
+                                form_id: {{ view.kwargs.form_id|default:"0" }}
+                            };
+                        },
+
+                        processResults: function (data, params) {
+                            params.page = params.page || 1;
+                            var results = [];
+                            $.each(data.results, (_, res) => {
+                                results.push({
+                                    'id': res.text,
+                                    'text': res.text,
+                                    'contents': res.contents,
+                                })
+                            });
+                            return {
+                                results: results,
+                                pagination: {
+                                    more: data.next
+                                }
+                            };
+                        }
+                    },
+
+                    templateSelection: function (data, container) {
+                        // Add custom attributes to the <option> tag for the selected option
+                        $(data.element).attr('data-contents', JSON.stringify(data.contents));
+                        return data.text;
+                    }
+
+                });
+            };
+
+            init_select2();
+            $(document).on('select2:select', '.autocomplete', function (event) {
+                let $target = $(event.target),
+                    autocompletes = $target.data('autocomplete');
+
+                let contents = $target.find('option:selected').data('contents')
+                if (autocompletes) {
+                    $.each(autocompletes, (index, autocomplete) => {
+                        let step_count = autocomplete.step,
+                            parent_td = $target.parent(),
+                            parent_index = parent_td.parent().children().index(parent_td),
+                            target_elem_index = parent_index + parseInt(step_count),
+                            searched_elem = $(parent_td.parent().children()[target_elem_index])
+                        if (contents && contents.length >= index) {
+                            let content = ""
+                            if (lang() == "ru"){
+                                content = contents[index].data_ru
+                            } else{
+                                content = contents[index].data
+                            }
+
+                            searched_elem.find('input').val(content)
+                        }
+                    })
+                }
+            });
+
+            var selected_bar = null;
+            $(document).on('click', '.select-bar', function () {
+                let target = $(this);
+                selected_bar = target;
+                let group = target.siblings('.input-data').data('group');
+                $.ajax({
+                    'url': `/v1/codes/render/?group=${group}&form_id={{ view.args.form_id }}`,
+                    success: function (response) {
+                        $("#codes_modal").html(response)
+                    },
+                    error: function (xhr) {
+                    }
+                })
+            });
+
+            $(document).on('click', '.codes-modal-block .close-modal', function () {
+                $("#codes_modal").html("")
+            });
+            $(document).on('change', '.codes-modal-block .code-select-box', function (e) {
+                let {target} = e;
+                let select_option = target.options[target.selectedIndex];
+                let contents = $(select_option).data('contents')
+                let input_data = $(selected_bar).siblings('.input-data'),
+                    autocompletes = input_data.data('autocomplete');
+                input_data.val(select_option.text);
+                if (autocompletes) {
+                    $.each(autocompletes, (index, autocomplete) => {
+                        let step_count = autocomplete.step,
+                            parent_td = input_data.parent(),
+                            parent_index = parent_td.parent().children().index(parent_td),
+                            target_elem_index = parent_index + parseInt(step_count),
+                            searched_elem = $(parent_td.parent().children()[target_elem_index]);
+                        let content = contents[index].data;
+                        searched_elem.find('input').val(content);
+                    })
+                }
+            })
+        })
+
+    </script>
+    <script src="{% static 'js/custom.js' %}?v={{ version }}" charset="UTF-8"></script>
+
+    <style>
+        input[readonly] {
+            background-color: rgba(75,70,92,.08);
+        }
+    </style>
+
+</head>
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar  ">
+    <div class="layout-container">
+        <!-- Menu -->
+        {{ left_sidebar }}
+        <script type="text/javascript">
+    let loader = document.createElement('div');
+    loader.classList.add('loader-fixed');
+    let loaderchild = document.createElement('div');
+    loaderchild.classList.add('lds-facebook');
+    let children1 = document.createElement('div');
+    let children2 = document.createElement('div');
+    let children3 = document.createElement('div');
+    let children4 = document.createElement('div');
+    loaderchild.appendChild(children1);
+    loaderchild.appendChild(children2);
+    loaderchild.appendChild(children3);
+    loaderchild.appendChild(children4);
+    loader.appendChild(loaderchild);
+    document.querySelector('body').appendChild(loader);
+</script>
+        <div class="layout-page">
+            <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                    id="layout-navbar">
+                <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0   d-xl-none ">
+                    <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                        <i class="ti ti-menu-2 ti-sm"></i>
+                    </a>
+                </div>
+                <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                    <span class="fw-semibold d-block">{{ selected_organization.name|default:'-'|upper }}</span>
+                    <ul class="navbar-nav flex-row align-items-center ms-auto">
+                        <!-- Language -->
+                        <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                               data-bs-toggle="dropdown"><i class="ti ti-language"></i>
+                                <span class="align-middle">{{ LANGUAGE_CODE|capfirst }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                {% get_available_languages as languages %}
+                                {% get_current_language as current_language %}
+                                {% for language in languages %}
+                                <li>
+                                    <a class="dropdown-item" href="/{{ language.0 }}{{ request.get_full_path|slice:'3:' }}" data-language="uz">
+                                        <span class="align-middle" text="{{ language.1 }}">{{ language.1 }}</span>
+                                        {% if not forloop.last %}{% endif %}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <!--/ Language -->
+
+                        <!-- Style Switcher -->
+                        <li class="nav-item me-2 me-xl-0">
+                            <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);"
+                               id="change-style"
+                               data-style="0">
+                                <i class="ti ti-md ti-moon-stars"></i>
+                            </a>
+                        </li>
+                        <!--/ Style Switcher -->
+
+                        <!-- Quick links  -->
+                        <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                               data-bs-toggle="dropdown"
+                               data-bs-auto-close="outside" aria-expanded="false">
+                                <i class='ti ti-layout-grid-add ti-md'></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end py-0">
+                                <div class="dropdown-menu-header border-bottom">
+                                    <div class="dropdown-header d-flex align-items-center py-3">
+                                        <h5 class="text-body mb-0 me-auto">{% trans "Quick" %}</h5>
+                                        <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body"
+                                           data-bs-toggle="tooltip"
+                                           data-bs-placement="top"><i
+                                                class="ti ti-sm ti-apps"></i></a>
+                                    </div>
+                                </div>
+                                <div class="dropdown-shortcuts-list scrollable-container">
+                                    <div class="row row-bordered overflow-visible g-0">
+                                        <div class="dropdown-shortcuts-item col">
+                                            <span class="dropdown-shortcuts-icon rounded-circle mb-2">
+                                              <i class="ti ti-chart-bar fs-4"></i>
+                                            </span>
+                                            <a href="{% url 'app:dashboard' %}"
+                                               class="stretched-link">{% trans 'Dashboard' %}</a>
+                                            <small class="text-muted mb-0">{% trans 'Dashboard' %}</small>
+                                        </div>
+                                        <div class="dropdown-shortcuts-item col">
+                                            <span class="dropdown-shortcuts-icon rounded-circle mb-2">
+                                              <i class="ti ti-lock fs-4"></i>
+                                            </span>
+                                            <a href="{% url 'app:staffs' %}"
+                                               class="stretched-link">{% trans 'My staffs' %}</a>
+                                            <small class="text-muted mb-0">{% trans 'My staffs' %}</small>
+                                        </div>
+                                    </div>
+                                    <div class="row row-bordered overflow-visible g-0">
+                                        <div class="dropdown-shortcuts-item col">
+                                            <span class="dropdown-shortcuts-icon rounded-circle mb-2">
+                                              <i class="ti ti-help fs-4"></i>
+                                            </span>
+                                            <a href="{% url 'app:help' %}"
+                                               class="stretched-link">{% trans "Help center" %}</a>
+                                            <small class="text-muted mb-0">{% trans "FAQ" %}</small>
+                                        </div>
+                                        <div class="dropdown-shortcuts-item col">
+                                            <span class="dropdown-shortcuts-icon rounded-circle mb-2">
+                                              <i class="menu-icon tf-icons ti ti-file-export"></i>
+                                            </span>
+                                            <a href="#" class="stretched-link">{% trans "Letters" %}</a>
+                                            <small class="text-muted mb-0">{% trans "Warning letters" %}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- Quick links -->
+
+                        <!-- Notification -->
+                        <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                               data-bs-toggle="dropdown"
+                               data-bs-auto-close="outside" aria-expanded="false">
+                                <i class="ti ti-bell ti-md"></i>
+                                {% if notifies_count > 0 %}
+                                    <span class="badge bg-danger rounded-pill badge-notifications">{{ notifies_count }}</span>
+                                {% endif %}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end py-0">
+                                <li class="dropdown-menu-header border-bottom">
+                                    <div class="dropdown-header d-flex align-items-center py-3">
+                                        <h5 class="text-body mb-0 me-auto">{% trans "Notifications" %}</h5>
+                                        <a href="javascript:void(0)" class="dropdown-notifications-all text-body"
+                                           data-bs-toggle="tooltip"
+                                           data-bs-placement="top" title="{% trans 'Show more' %}"><i
+                                                class="ti ti-mail-opened fs-4"></i></a>
+                                    </div>
+                                </li>
+                                <li class="dropdown-notifications-list scrollable-container">
+                                    <ul class="list-group list-group-flush">
+                                    {% if notifies %}
+                                        {% for notify in notifies %}
+                                            <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                                                <div class="d-flex">
+                                                    <div class="flex-shrink-0 me-3">
+                                                        <div class="avatar">
+
+                                                            <span class="avatar-initial rounded-circle bg-label-{{ notify.type|slice:"6:"|lower }}">{{ selected_organization.name|default:'-'|upper|slice:"1:3" }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <a href="{% url 'app:add_news' notify.id %}"><h6 class="mb-1">{{ notify.get_status_display|upper }}</h6></a>
+                                                        <p class="mb-0">{{ notify.form_type }}</p>
+                                                        <small class="text-muted"></small>
+                                                    </div>
+                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                        <a href=""
+                                                           class="dropdown-notifications-read"><span
+                                                                class="badge badge-dot"></span></a>
+                                                        <a href="{% url 'app:add_news' notify.id %}"
+                                                            class="dropdown-notifications-archive">
+                                                            <span class="ti ti-x"></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    {% else %}
+                                        <li class="list-group list-group-flush text-center m-2">{% trans "No data found" %}</li>
+                                    {% endif %}
+                                    </ul>
+                                </li>
+                                <li class="dropdown-menu-footer border-top">
+                                    <a href="{% url 'app:news' %}"
+                                       class="dropdown-item d-flex justify-content-center text-primary p-2 h-px-40 mb-1 align-items-center">
+                                       {% trans "View all notifications" %}
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--/ Notification -->
+                        <!-- User -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                               data-bs-toggle="dropdown">
+                                <div class="avatar avatar-online" title="{{ selected_organization.name|default:'-'|upper }}">
+                                    <span class="avatar-initial rounded-circle bg-label-danger">{{ selected_organization.name|default:'-'|upper|slice:"1:3" }}</span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <div class="dropdown-item">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar avatar-online">
+                                                    <span class="avatar-initial rounded-circle bg-label-danger">{{ selected_organization.name|default:'-'|upper|slice:"1:3" }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1" title="{{ selected_organization.name|default:'-'|upper }}">
+                                                <span class="fw-semibold d-block">{{ selected_organization.name|default:'-'|upper|slice:"0:20" }}...</span>
+                                                <small class="text-muted">{{ selected_organization.inn|default:'-' }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'app:organizations' %}">
+                                        <i class="ti ti-building-bank me-2 ti-sm"></i>
+                                        <span class="align-middle">{% trans 'Organizations' %}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'app:staffs' %}">
+                                        <i class="ti ti-user-check me-2 ti-sm"></i>
+                                        <span class="align-middle">{% trans 'My staffs' %}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="https://t.me/anystat"
+                                       onclick="window.open(this.href, 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,'); return false;">
+                                        <i class="ti ti-lifebuoy me-2 ti-sm"></i>
+                                        <span class="align-middle">{% trans 'Help' %}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'app:logout' %}" target="_blank">
+                                        <i class="ti ti-logout me-2 ti-sm"></i>
+                                        <span class="align-middle">{% trans 'Logout' %}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Search Small Screens -->
+                <div class="navbar-search-wrapper search-input-wrapper  d-none">
+                    <input type="text" class="form-control search-input container-xxl border-0" placeholder="{% trans 'Search' %}..."
+                           aria-label="{% trans 'Search' %}...">
+                    <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
+                </div>
+            </nav>
+            <!-- / Navbar -->
+            <!-- Content wrapper -->
+            {% block content %}
+
+            {% endblock %}
+            <!-- Content wrapper -->
+            {% include 'parts/messages.html' %}
+
+            <!-- Chat -->
+            <!-- / Chat -->
+
+        </div>
+    </div>
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+    <div class="drag-target"></div>
+</div>
+
+{% include 'assistant.html' %}
+
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="{% static '' %}assets/vendor/libs/jquery/jquery.js"></script>
+<script src="{% static '' %}assets/vendor/libs/popper/popper.js"></script>
+<script src="{% static '' %}assets/vendor/js/bootstrap.js"></script>
+<script src="{% static '' %}assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="{% static '' %}assets/vendor/libs/node-waves/node-waves.js"></script>
+
+<script src="{% static '' %}assets/vendor/libs/hammer/hammer.js"></script>
+<script src="{% static '' %}assets/vendor/libs/i18n/i18n.js"></script>
+<script src="{% static '' %}assets/vendor/libs/typeahead-js/typeahead.js"></script>
+
+<script src="{% static '' %}assets/vendor/js/menu.js"></script>
+<!-- Vendors JS -->
+<script src="{% static '' %}assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="{% static '' %}assets/vendor/libs/swiper/swiper.js"></script>
+<script src="{% static '' %}assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+<!-- Main JS -->
+<script src="{% static '' %}assets/js/main.js"></script>
+<!-- Page JS -->
+
+{% block js %}{% endblock %}
+
+</body>
+</html>

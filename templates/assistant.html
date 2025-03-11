@@ -1,0 +1,213 @@
+{% load static i18n %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static '' %}assets/css/chat-collapse.css"/>
+    <link rel="stylesheet" href="{% static '' %}assets/css/type-loader.css"/>
+    <link rel="stylesheet" href="{% static '' %}assets/css/app_custom.css"/>
+    <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+            rel="stylesheet"
+    />
+{% endblock %}
+
+<div>
+    <!-- chat open -->
+    <div class="chat-bar-open" id="chat-open">
+        <button id="chat-open-button" type="button" class="collapsible close" onclick="openConversation()">
+            <img src="{% static '' %}assets/img/chatbot.jpg" alt="Stat-AI"/>
+        </button>
+    </div>
+
+    <!-- chat close -->
+    <div class="chat-bar-close" id="chat-close">
+        <button id="chat-close-button" type="button" class="collapsible close" onclick="chatClose()">
+            <i class="material-icons-outlined"> close </i>
+        </button>
+    </div>
+
+
+    <!-- chat chat-window 2 -->
+    <div class="chat-window2" id="chat-window2">
+        <div class="ms-auto reset-btn" style="position: absolute; top: 10px; right: 12px; margin:10px; z-index: 1">
+            <button class="gap-2 btn" onclick="clearChatMessages()"><img src="{% static '' %}img/reset.png"
+                                                                         alt="refresh" class="mr-4"/></button>
+        </div>
+        <div class=" col ">
+            <div class="message-box2" id="messageBox2">
+                <div class="hi-there">
+                    <p class="p1">Salom, men StatAI.</p>
+                    <p class="p2">Statistika agentligiga oid ma'lumotlar bo'yicha savolingiz bo'lsa, marhamat
+                        so'rang. </p>
+                </div>
+                <div class="message-box " id="messageBox">
+                    <div class="default-questions">
+                        <button class="btn"
+                                onclick="sendDefaultQuestion('Statistika hisobotini elektron shaklda taqdim etish qanday amalga oshiriladi?' )">
+                            Statistika hisobotini elektron shaklda taqdim etish qanday amalga oshiriladi?
+                        </button>
+                        <button class="btn"
+                                onclick="sendDefaultQuestion('eStat tizimi nima uchun yaratilgan?')">
+                            eStat tizimi nima uchun yaratilgan?
+                        </button>
+                        <button class="btn"
+                                onclick="sendDefaultQuestion('Statistika agentligi nima bilan shug‘ullanadi?')">
+                            Statistika agentligi nima bilan shug‘ullanadi?
+                        </button>
+                    </div>
+                    {% if messages_list %}
+                        {% for message in messages_list %}
+                            {% if message.role == 'user' %}
+                                <div class="first-chat">
+                                    <p>{{ message.content }}</p>
+                                    <div class="arrow"></div>
+                                </div>
+                            {% else %}
+                                <div class="second-chat">
+                                    <div class=""></div>
+                                    <p>{{ message.content }}</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        <div class="input-box">
+            <div class="pt-3">
+
+            </div>
+            <div class="write-reply ">
+                <input class="inputText inputStyle" type="text" id="textInput" placeholder="Savolingizni yozing..."/>
+            </div>
+            <div class="send-button">
+                <button type="submit" class="send-message mt-1 ml-4" id="send"
+                        onclick="userResponse()">
+                    <i class="material-icons-outlined"> send </i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function sendDefaultQuestion(question) {
+        document.getElementById("textInput").value = question;
+        userResponse();
+    }
+
+    function clearChatMessages() {
+        const firstChats = document.querySelectorAll('.first-chat');
+        firstChats.forEach(chat => chat.remove());
+
+
+        const secondChats = document.querySelectorAll('.second-chat');
+        secondChats.forEach(chat => chat.remove());
+
+
+        // URL-ga GET so'rov yuborish
+        fetch("{% url 'clear-chat-history' %}", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+    }
+
+    function chatClose() {
+        document.getElementById("chat-open").style.display = "block";
+        document.getElementById("chat-close").style.display = "none";
+        document.getElementById("chat-window2").style.display = "none";
+
+    }
+
+    function openConversation() {
+        document.getElementById("chat-window2").style.display = "block";
+        document.getElementById("chat-open").style.display = "none";
+        document.getElementById("chat-close").style.display = "block";
+
+    }
+
+    function clearChatHistory() {
+        document.getElementById("messageBox").innerHTML = "";
+    }
+
+    //Gets the text from the input box(user)
+    function userResponse() {
+        console.log("response");
+        let userText = document.getElementById("textInput").value;
+
+        if (userText == "") {
+            alert("Please type something!");
+        } else {
+            document.getElementById("messageBox").innerHTML += `<div class="first-chat">
+      <p>${userText}</p>
+      <div class="arrow"></div>
+    </div>`;
+
+            var objDiv = document.getElementById("messageBox");
+            objDiv.scrollTop = objDiv.scrollHeight;
+            adminResponse();
+
+        }
+    }
+
+    function typeText(element, text, index = 0) {
+        if (index < text.length) {
+            element.innerHTML += text.charAt(index);
+            setTimeout(() => typeText(element, text, index + 1), 30); // Adjust the speed by changing the timeout value
+        }
+    }
+
+    //admin Respononse to user's message
+    function adminResponse() {
+        let userText = document.getElementById("textInput").value;
+        document.getElementById("textInput").value = "";
+        document.getElementById("messageBox").innerHTML += `<br><br><div class="second-chat loaderStyle" id="type-loader-block">
+                     <div class="typing-loader"></div>
+            </div>`;
+
+        fetch("{% url 'get_chat_answer' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({'message': userText})
+        })
+            .then(response => response.json())
+            .then((data) => {
+                document.getElementById("type-loader-block").remove();
+                let messageBox = document.getElementById("messageBox");
+                let newMessage = document.createElement("div");
+                newMessage.classList.add("second-chat");
+                newMessage.innerHTML = `<div class="circle" id="circle-mar"></div><p></p>`;
+                messageBox.appendChild(newMessage);
+
+                let messageParagraph = newMessage.querySelector("p");
+                typeText(messageParagraph, data.response);
+
+                var objDiv = document.getElementById("messageBox");
+                objDiv.scrollTop = objDiv.scrollHeight;
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+
+    }
+
+    //press enter on keyboard and send message
+    addEventListener("keypress", (e) => {
+        if (e.keyCode === 13) {
+
+            const e = document.getElementById("textInput");
+            if (e === document.activeElement) {
+                userResponse();
+            }
+        }
+    });
+</script>
