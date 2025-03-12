@@ -16,7 +16,7 @@ class BaseModel(models.Model):
 
 
 class Thread(BaseModel):
-    thread_id = models.CharField(max_length=100, unique=True)
+    thread_id = models.CharField(max_length=100)
     session_id = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):

@@ -28,5 +28,7 @@ class Config:
     URL_LIST = [
         "https://stat.uz/uz/haqida/rahbariyat",
         "https://stat.uz/uz/haqida/markaziy-apparat",
+        "https://stat.uz/en/about/administration",
+        "https://stat.uz/en/about/central-office"
         ]
 
