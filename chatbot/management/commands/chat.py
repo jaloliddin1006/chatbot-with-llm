@@ -9,6 +9,5 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         question = options['question']
-        response, _r, _s = chatbot.get_response(question)
+        response= chatbot.get_response(question)
         self.stdout.write(self.style.SUCCESS(f"Chatbot javobi: {response}"))
-        print(f"\n\nChatbot javobi: {_r} \n {_s}")

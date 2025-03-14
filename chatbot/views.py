@@ -66,7 +66,7 @@ def get_answer(request):
             # defaults={'thread_id': client.beta.threads.create().id}
         )
 
-        assistant_response = chatbot.get_response(user_message)
+        assistant_response = chatbot.get_response(user_message).get("content", "Chatbot hozirda ishlamayapti!")
         print(assistant_response)
         threading.Thread(target=save_user_message, args=(thread, user_message, assistant_response)).start()
 

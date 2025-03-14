@@ -73,8 +73,6 @@ else:
 
 
 
-chatbot = Chatbot(pinecone_manager, embedding_generator, api_key=openai_api_key)
+# chatbot = Chatbot(pinecone_manager, embedding_generator, api_key=openai_api_key)
 
-#
-# # Chatbotni ishga tushirish
-# chatbot = Chatbot(pinecone_manager, embedding_generator, model_path="service/llama-3.2-1B")
+chatbot = Chatbot(pinecone_manager, embedding_generator)

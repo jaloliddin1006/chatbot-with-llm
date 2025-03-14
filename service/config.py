@@ -26,8 +26,8 @@ class Config:
     # WEBHOOK_URL = os.getenv('WEBHOOK_URL')
     # List of URLs to scrape
     URL_LIST = [
-        "https://stat.uz/uz/haqida/rahbariyat",
-        "https://stat.uz/uz/haqida/markaziy-apparat",
+        # "https://stat.uz/uz/haqida/rahbariyat",
+        # "https://stat.uz/uz/haqida/markaziy-apparat",
         "https://stat.uz/en/about/administration",
         "https://stat.uz/en/about/central-office"
         ]
