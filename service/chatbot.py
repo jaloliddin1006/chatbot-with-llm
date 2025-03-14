@@ -96,7 +96,6 @@
 
 
 import re
-from .ollama import OllamaModel
 import requests
 
 

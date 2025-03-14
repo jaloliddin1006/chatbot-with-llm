@@ -19,7 +19,8 @@ if not pinecone_api_key or not pinecone_environment:
     raise ValueError("Pinecone API key or environment is not set. Please set the PINECONE_API_KEY and PINECONE_ENVIRONMENT environment variables.")
 
 # Initialize the embedding generator
-embedding_generator = EmbeddingGenerator(api_key=openai_api_key)
+# embedding_generator = EmbeddingGenerator(api_key=openai_api_key)
+embedding_generator = EmbeddingGenerator(model_name="llama3.2:3b", base_url="http://localhost:11434")
 
 # Initialize Pinecone manager
 pinecone_manager = PineconeManager()
@@ -69,10 +70,10 @@ else:
                     # Index data into Pinecone
     ids = [str(i) for i in range(len(texts))]
     pinecone_manager.upsert_embeddings(ids, embeddings, metadatas)
-    index_info = pinecone_manager.index.describe_index_stats()
+    # index_info = pinecone_manager.index.describe_index_stats()
 
 
 
 # chatbot = Chatbot(pinecone_manager, embedding_generator, api_key=openai_api_key)
 
-chatbot = Chatbot(pinecone_manager, embedding_generator)
+chatbot = Chatbot(pinecone_manager, embedding_generator, model_name="llama3.2:3b", base_url="http://localhost:11434")
