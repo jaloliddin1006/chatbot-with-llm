@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/service/models/LLaMA-Pro-8B-GGUF" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/service/models/Llama-3.2-1B" vcs="Git" />
+  </component>
+</project>
