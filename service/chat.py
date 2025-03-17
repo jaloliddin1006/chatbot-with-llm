@@ -1,4 +1,4 @@
-from .chatbot import Chatbot
+from .chatbot import *
 from .config import *
 from .embeddings import *
 from .pinecone_manager import *
@@ -74,6 +74,8 @@ else:
 
 
 
+# with api
 # chatbot = Chatbot(pinecone_manager, embedding_generator, api_key=openai_api_key)
 
-chatbot = Chatbot(pinecone_manager, embedding_generator, model_name="llama3.2:1b", base_url="http://localhost:11434/v1/chat/completions")
+# with ollama local model
+chatbot = Chatbot2(pinecone_manager, embedding_generator, model_name="llama3.2:1b", base_url="http://localhost:11434/v1/chat/completions")
