@@ -1,3 +1,4 @@
+import asyncio
 import json
 import re
 import threading
@@ -66,11 +67,11 @@ def get_answer(request):
             # defaults={'thread_id': client.beta.threads.create().id}
         )
 
-        assistant_response = chatbot.get_response(user_message).get("content", "Chatbot hozirda ishlamayapti!")
+        assistant_response = chatbot.get_response(user_message)
         print(assistant_response)
         threading.Thread(target=save_user_message, args=(thread, user_message, assistant_response)).start()
 
-        return JsonResponse({'response': assistant_response})
+        return JsonResponse({'response': assistant_response.get("content", "Kechirasiz, javob bera olmadim.")})
 
 
 def clear_history(request):

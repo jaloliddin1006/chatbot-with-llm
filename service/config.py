@@ -29,6 +29,12 @@ class Config:
         # "https://stat.uz/uz/haqida/rahbariyat",
         # "https://stat.uz/uz/haqida/markaziy-apparat",
         "https://stat.uz/en/about/administration",
-        "https://stat.uz/en/about/central-office"
+        "https://stat.uz/en/about/central-office",
+        # "https://stat.uz/uz/haqida/hududiy-boshqarmalar",
+        # "https://stat.uz/uz/haqida/kmo-va-st-markazi",
+        # "https://stat.uz/uz/haqida/gender-tenglik",
+        # "https://stat.uz/uz/haqida/yoshlar-siyosati",
+        # "https://stat.uz/uz/haqida/bo-sh-ish-o-rinlari",
+        
         ]
 
